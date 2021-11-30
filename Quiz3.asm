@@ -1,9 +1,11 @@
+# Caitlin Tan
+# CS21
 # Quiz3.asm
 # Newton's Method: approximation to find square root of any number
 # (x + n/x)/2
 
     .data
-prompt: .asciiz "Enter float n: "
+prompt: .asciiz "Enter float n to find square root approximation: "
 
     .text
     .globl main

@@ -1,3 +1,5 @@
+# Caitlin Tan
+# CS21
 # Quiz2.asm
 # ax^2+bx+c
 
