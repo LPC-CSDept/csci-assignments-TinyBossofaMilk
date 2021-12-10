@@ -6,7 +6,7 @@
 # num through syscall
 
     .data
-prompt: .asciiz "Type three numbers:"
+prompt: .asciiz "Type three numbers: "
 nl: .asciiz "\n"
 
     .text
@@ -38,7 +38,7 @@ bgtz    $s0, input          # if(counter > 0), branch to input
 nop
 
 li      $v0, 1              # print three digit number
-move    $a0, $s0
+move    $a0, $s1            # s1 -> argument
 syscall
 li      $v0, 10
 syscall
