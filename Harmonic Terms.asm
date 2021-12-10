@@ -28,9 +28,6 @@ loop:	blez	$s0, exit	# branch to end if input <= 0
 	b	loop
 	nop
 	
-	
-	
-	
 exit:	li	$v0, 2		# << float
 	syscall	
 	li	$v0, 10		# exit program
