@@ -1,4 +1,25 @@
+# q5.asm
+#
+# Caitlin Tan
+# 12/9/21
+# Takes characters polling and keeps on 
+# outputting them until 'q' is typed. 
 
+
+    .data
+prompt: .asciiz "Type characters to print, or 'q' to quit: "
+nl: .asciiz "\n"
+
+    .text
+    .globl main
+
+li  $v0, 4                  # send out prompt
+la  $a0, prompt
+syscall
+
+quit:
+li      $v0, 10
+syscall
 
 
 
