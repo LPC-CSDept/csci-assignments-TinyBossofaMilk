@@ -29,6 +29,8 @@ beqz	$t1, input          # loop if not done yet
 nop
 
 lw      $t3, 4($t0)         # take value of transmitter 
+addi    $t3, $t3, -48        # input += 48 (char -> int equivalent)
+
 mult    $s1, $s2            # value *= 10
 mflo    $s1                 # move value to 10
 addu    $s1, $s1, $t3       # saved value + inputted value
