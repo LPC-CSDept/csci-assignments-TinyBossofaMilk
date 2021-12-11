@@ -2,8 +2,8 @@
 #
 # Caitlin Tan
 # 12/9/21
-# Takes characters polling and keeps on 
-# outputting them until 'q' is typed. 
+# Takes characters polling and keeps on outputting them until 'q' is typed, 
+# utilizing the interrupt
 
 
     .data
@@ -35,7 +35,7 @@ nop
 printloop:
 lw      $t0, 8($s0)         # load transmitter control
 andi    $t0, $t0, 0x0001    # select LSB
-bnez    $t0, printloop:       # wait till transmitter control is ready
+bnez    $t0, printloop      # wait till transmitter control is ready
 nop
 
 sw      $v0,  12($s0)       
