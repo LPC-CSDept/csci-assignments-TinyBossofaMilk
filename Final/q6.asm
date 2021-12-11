@@ -39,7 +39,8 @@ bnez    $t0, printloop:       # wait till transmitter control is ready
 nop
 
 sw      $v0,  12($s0)       
-
+b       inputloop
+nop
 
 
 quit:
