@@ -17,6 +17,23 @@ li  $v0, 4                  # send out prompt
 la  $a0, prompt
 syscall
 
+lui	$t0, 0xffff		        # load address of kernel
+
+input:
+lw	    $t1, 0($t0)		    # load receiver control
+andi	$t1, $t1, 0x0001	# clear all except lowest bit
+beqz	$t1, input          # loop if not done yet
+nop
+
+
+print:
+lui     $t0, 0xFFFF         # load t0 with address kernel
+
+waitloop:
+lw      $t1, 8($t0)         # load transmitter control
+andi    $t1, $t1, 0x0001    # select LSB
+bnez    $t1, waitloop       # wait till transmitter control is ready
+
 quit:
 li      $v0, 10
 syscall
