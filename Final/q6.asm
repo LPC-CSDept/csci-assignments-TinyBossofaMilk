@@ -32,7 +32,7 @@ addi    $t0, $s1, -113      # char - 113 ('q')
 beqz    $t0, quit           # if inputted char is 'q', quit
 nop
 
-printloop:
+printloop:                  # assumes $t0 is already set
 lw      $t0, 8($s0)         # load transmitter control
 andi    $t0, $t0, 0x0001    # select LSB
 bnez    $t0, printloop      # wait till transmitter control is ready
@@ -41,7 +41,6 @@ nop
 sw      $v0,  12($s0)       
 b       inputloop
 nop
-
 
 quit:
 li      $v0, 10
