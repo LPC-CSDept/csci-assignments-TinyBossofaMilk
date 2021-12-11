@@ -19,12 +19,16 @@ syscall
 
 lui	$s0, 0xffff		        # load address of kernel $S0 IS KERNEL ADDRESS 
 
-inputl:
+inputloop:
 lw	    $t0, 0($s0)		    # load receiver control
 andi	$t0, $t0, 0x0001	# clear all except lowest bit
-beqz	$t0, inputl          # loop if not done yet
+beqz	$t0, inputloop      # loop if not done yet
 nop
+lw      $s1, 4($s0)         # save input to s1
+j       check
 
+
+check:
 
 
 
