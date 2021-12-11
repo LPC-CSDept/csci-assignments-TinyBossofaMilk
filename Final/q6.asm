@@ -27,15 +27,15 @@ nop
 lw      $s1, 4($s0)         # save input to s1
 j       check
 
-
 check:
+addi    $t0, $s1, -113      # char - 113 ('q')
+beqz    $t0, quit           # if inputted char is 'q', quit
+nop
 
-
-
-waitloop:
+printloop:
 lw      $t0, 8($s0)         # load transmitter control
 andi    $t0, $t0, 0x0001    # select LSB
-bnez    $t0, waitloop       # wait till transmitter control is ready
+bnez    $t0, printloop:       # wait till transmitter control is ready
 nop
 
 sw      $v0,  12($s0)       
