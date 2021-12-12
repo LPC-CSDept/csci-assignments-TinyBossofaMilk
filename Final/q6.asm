@@ -17,7 +17,7 @@ li  $v0, 4                  # send out prompt
 la  $a0, prompt
 syscall
 
-lui	$s0, 0xffff		        # load address of kernel $S0 IS KERNEL ADDRESS 
+lui	$s0, 0xffff		# load address of kernel $S0 IS KERNEL ADDRESS 
 
 inputloop:
 lw	    $t0, 0($s0)		    # load receiver control
@@ -26,6 +26,7 @@ beqz	$t0, inputloop      # loop if not done yet
 nop
 lw      $s1, 4($s0)         # save input to s1
 j       check
+nop
 
 check:
 addi    $t0, $s1, -113      # char - 113 ('q')
@@ -38,8 +39,8 @@ andi    $t0, $t0, 0x0001    # select LSB
 bnez    $t0, printloop      # wait till transmitter control is ready
 nop
 
-sw      $v0,  12($s0)       
-b       inputloop
+sw      $s0,  12($s0)       # write to transmitter data
+b       inputloop           # loop back to input loop
 nop
 
 quit:
