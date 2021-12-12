@@ -49,10 +49,9 @@ syscall
 mfc0 	$k0, $13     	#   Cause register     
 srl     $a0, $k0, 2     #   Extract   ExcCode     Field     
 andi    $a0, $a0, 0x1f  #   Get the exception code     
-bne     $a0, $zero,   kdone     # Exception Code 0 is I/O. Only processing I/O here     
-
+bne     $a0, $zero,   kdone     # Exception Code 0 is I/O. Only processing I/O here
 
 # implement quit in kernel
-addi    $t0, $s1, -113      # char - 113 ('q')
-beqz    $t0, quit           # if inputted char is 'q', quit
+addi    $t1, $s1, -113      # char - 113 ('q')
+beqz    $t1, quit           # if inputted char is 'q', quit
 nop
