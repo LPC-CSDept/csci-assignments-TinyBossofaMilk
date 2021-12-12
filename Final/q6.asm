@@ -14,10 +14,12 @@ nl: .asciiz "\n"
     .globl main
 
 li  $v0, 4                  # send out prompt
-la  $a0, prompt
+la  $a0, prompt             # load prompt address
 syscall
 
-lui	$s0, 0xffff		        # load address of kernel $S0 IS KERNEL ADDRESS 
+lui	$s0, 0xffff		        # load address of kernel $S0 IS KERNEL ADDRESS
+ori $t0, $zero, 2           # set receiver control to interrupt ready
+sw  $t0, 0($t0)             # load 0x10 to receiver control
 
 inputloop:
 lw	    $t0, 0($s0)		    # load receiver control
@@ -28,12 +30,6 @@ lw      $s1, 4($s0)         # save input to s1
 j       check
 nop
 
-#############we do not ddo manual checks, will be in kernel
-check:
-addi    $t0, $s1, -113      # char - 113 ('q')
-beqz    $t0, quit           # if inputted char is 'q', quit
-nop
-##################################
 
 printloop:                  # assumes $t0 is already set
 lw      $t0, 8($s0)         # load transmitter control
@@ -50,28 +46,25 @@ li      $v0, 10
 syscall
 
 
+#############we do not ddo manual checks, will be in kernel
+check:
+addi    $t0, $s1, -113      # char - 113 ('q')
+beqz    $t0, quit           # if inputted char is 'q', quit
+nop
+##################################
 
 # KERNEL text ******************
 
-.ktext  0x80000180     # kernel code starts here     
-sw     	$v0, s1     #   We need to use these registers     
-sw     	$a0, s2     #   not using the stack because the interrupt      
-                    # might be triggered by a memory reference      
-                    # using a bad value of the stack pointer  
+.ktext  0x80000180     # kernel code starts here  
 
 mfc0 	$k0, $13     	#   Cause register     
 srl     $a0, $k0, 2     #   Extract   ExcCode     Field     
 andi    $a0, $a0, 0x1f  #   Get the exception code     
 bne     $a0, $zero,   kdone     # Exception Code 0 is I/O. Only processing I/O here     
 
-lui     $v0, 0xFFFF    	#   $v0 =   0xFFFF0000     
-lw     	$a0, 4($v0)   # 	get the input key     
-li 		$v0,1     		#   print it here.      
-syscall     			#   Note: interrupt routine should return very fast,     
-                        #   doing something like print is NOT a good practice!     
-li $v0,4     			#   print the new line     
-la $a0,   new_line
-syscall 
+addi    $t0, $s1, -113      # char - 113 ('q')
+beqz    $t0, quit           # if inputted char is 'q', quit
+nop
 
 
 Make the assembly program with Interrupted I/O.
