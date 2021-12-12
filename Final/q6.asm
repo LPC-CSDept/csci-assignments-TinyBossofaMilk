@@ -19,7 +19,7 @@ syscall
 
 lui	$s0, 0xffff		        # load address of kernel $S0 IS KERNEL ADDRESS
 ori $t0, $zero, 2           # set receiver control to interrupt ready
-sw  $t0, 0($t0)             # load 0x10 to receiver control
+sw  $t0, 0($s0)             # load 0x10 to receiver control
 
 inputloop:
 lw	    $t0, 0($s0)		    # load receiver control
