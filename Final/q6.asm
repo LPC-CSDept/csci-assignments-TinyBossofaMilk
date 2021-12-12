@@ -17,6 +17,9 @@ li  $v0, 4                  # send out prompt
 la  $a0, prompt             # load prompt address
 syscall
 
+mfc0 	$a0, $12     #   read from the status register     
+ori     $a0,   0xff11     # enable all interrupts     
+mtc0 	$a0, $12     # write back to the status register    
 lui	$s0, 0xffff		        # load address of kernel $S0 IS KERNEL ADDRESS
 ori $t0, $zero, 2           # set receiver control to interrupt ready
 sw  $t0, 0($s0)             # load 0x10 to receiver control
@@ -55,3 +58,4 @@ bne     $a0, $zero,   kdone     # Exception Code 0 is I/O. Only processing I/O h
 addi    $t1, $s1, -113      # char - 113 ('q')
 beqz    $t1, quit           # if inputted char is 'q', quit
 nop
+
