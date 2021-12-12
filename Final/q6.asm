@@ -31,7 +31,7 @@ lw      $s1, 4($s0)         # save input to $s1
 printloop:                  # assumes $t0 is already set
 lw      $t0, 8($s0)         # load transmitter control
 andi    $t0, $t0, 0x0001    # select LSB
-bnez    $t0, printloop      # wait till transmitter control is ready
+bez    $t0, printloop      # wait till transmitter control is ready
 nop
 
 sw      $s1,  12($s0)       # write to transmitter data
